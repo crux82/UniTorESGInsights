@@ -1,0 +1,10 @@
+gradio>=4.0
+torch>=2.0
+transformers>=4.30
+huggingface_hub>=0.20
+pymupdf>=1.23
+pandas>=2.0
+numpy>=1.24
+matplotlib>=3.7
+plotly>=5.15
+Pillow>=10.0
