@@ -1,6 +1,6 @@
 # UniTor ESG Insights
 ![Logo](assets/logo.png)
-Companion repository for the paper (UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis) submitted at [CIKM 2026](https://cikm2026.diag.uniroma1.it/), Rome, ITALY. 
+Companion repository for the paper (UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis) accepted at [CIKM 2026](https://cikm2026.diag.uniroma1.it/), Rome, ITALY. 
 
 ## Table of Contents
 - [Overview](#overview)
