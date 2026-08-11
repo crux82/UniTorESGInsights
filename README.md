@@ -215,18 +215,15 @@ UniTor ESG Insight System/
 │   ├── theme.py
 │   └── interface.py
 │
-├── assets/
-│   ├── logo.png
-│   ├── workflow.png
-│   ├── targetaudience.png
-│   │
-│   ├── sdg_icons/
-│   ├── gri_icons/
-│   ├── quality_icons/
-│   └── climate_icons/
-│
-└── example_reports/
-    └── example_outputs/
+└──  assets/
+    ├── logo.png
+    ├── workflow.png
+    ├── targetaudience.png
+    │
+    ├── sdg_icons/
+    ├── gri_icons/
+    ├── quality_icons/
+   └── climate_icons/
 ```
 
 ## License
