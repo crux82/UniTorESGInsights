@@ -63,7 +63,7 @@ def build_interface():
 
         gr.Image(
             value="assets/workflow.png",
-            label="Human-in-the-Loop Interactive Workflow Overview",
+            label="Human-in-the-Loop Interactive Workflow Overview. SDG logo and icons © United Nations.",
             interactive=False,
             #width=600
         )
@@ -150,7 +150,8 @@ def build_interface():
         # NOTE: starts visible=True (not False) -- see the demo.load()
         # workaround below for why.
         with gr.Column(visible=True) as sdg_container:
-            gr.Markdown("### SDG Filter")
+            gr.Markdown("### SDG Filter. SDG logo and icons © United Nations. Used in accordance with the [UN SDG Guidelines](https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/01/SDG_Guidelines_AUG_2019_Final.pdf) "
+                        "for informational, non-commercial purposes. No endorsement by the United Nations is implied.")
 
             sdg_gallery = gr.Gallery(
                 value=sdg_images,
