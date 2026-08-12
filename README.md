@@ -60,7 +60,7 @@ The UniTor ESG Insight System implements a Human-in-the-Loop interactive workflo
   <img src="assets/workflow.png" width="750"/>
 </p>
 
----
+**SDG logo and icons © United Nations.** Used in accordance with the [UN SDG Guidelines](https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/01/SDG_Guidelines_AUG_2019_Final.pdf) for informational, non-commercial purposes. No endorsement by the United Nations is implied.
 
 ### 1. PDF Ingestion & 2. Automatic Paragraph Extraction
 
