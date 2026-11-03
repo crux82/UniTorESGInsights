@@ -2,6 +2,11 @@
 ![Logo](assets/logo.png)
 Companion repository for the paper **"UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis"**, published in the Proceedings of the [35th ACM International Conference on Information and Knowledge Management (CIKM 2026)](https://cikm2026.diag.uniroma1.it/), November 7–11, 2026, Rome, Italy.
 
+**ACM Reference Format:**
+
+Seyed Alireza Mousavian Anaraki, Danilo Croce, Roberta Costa, Luigi Tiburzi, Armando Calabrese, and Roberto Basili. 2026. UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis. In *Proceedings of the 35th ACM International Conference on Information and Knowledge Management (CIKM '26)*, November 07–11, 2026, Rome, Italy. ACM, New York, NY, USA. [https://doi.org/10.1145/3799682.3840253](https://doi.org/10.1145/3799682.3840253)
+
+
 ## Table of Contents
 - [Overview](#overview)
 - [Quick Start](#quick-start)
@@ -248,6 +253,3 @@ If you use this repository or its resources in your research, please cite our pa
   publisher = {ACM},
   doi       = {10.1145/3799682.3840253}
 }
-
-**ACM Reference Format:**
-Seyed Alireza Mousavian Anaraki, Danilo Croce, Roberta Costa, Luigi Tiburzi, Armando Calabrese, and Roberto Basili. 2026. UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis. In *Proceedings of the 35th ACM International Conference on Information and Knowledge Management (CIKM '26)*, November 07–11, 2026, Rome, Italy. ACM, New York, NY, USA. [https://doi.org/10.1145/3799682.3840253](https://doi.org/10.1145/3799682.3840253)
