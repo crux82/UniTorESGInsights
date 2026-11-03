@@ -1,6 +1,6 @@
 # UniTor ESG Insights
 ![Logo](assets/logo.png)
-Companion repository for the paper (UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis) accepted at [CIKM 2026](https://cikm2026.diag.uniroma1.it/), Rome, ITALY. 
+Companion repository for the paper **"UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis"**, published in the Proceedings of the [35th ACM International Conference on Information and Knowledge Management (CIKM 2026)](https://cikm2026.diag.uniroma1.it/), November 7–11, 2026, Rome, Italy.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -229,3 +229,21 @@ UniTor ESG Insight System/
 ## License
 This project is released under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
+## Citation
+If you use this repository or its resources in your research, please cite our paper:
+
+```bibtex
+@inproceedings{mousavian2026unitorsg,
+  author    = {Mousavian Anaraki, Seyed Alireza and
+               Croce, Danilo and
+               Costa, Roberta and
+               Tiburzi, Luigi and
+               Calabrese, Armando and
+               Basili, Roberto},
+  title     = {{UniTor ESG Insights}: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis},
+  booktitle = {Proceedings of the 35th ACM International Conference on Information and Knowledge Management (CIKM '26)},
+  year      = {2026},
+  address   = {Rome, Italy},
+  publisher = {ACM},
+  doi       = {10.1145/3799682.3840253}
+}
