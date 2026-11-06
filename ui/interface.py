@@ -40,6 +40,250 @@ from ui.gradio_functions import (
     run_selected_tasks
 )
 
+PAPER_TITLE = (
+    "UniTor ESG Insights: An Interactive Human-in-the-Loop System for "
+    "Traceable Sustainability Report Analysis"
+)
+PAPER_DOI_URL = "https://doi.org/10.1145/3799682.3840253"
+CIKM_URL = "https://cikm2026.diag.uniroma1.it/"
+REPO_URL = "https://github.com/crux82/UniTorESGInsights"
+MODELS_URL = "https://hf.co/collections/sag-uniroma2/unitoresginsights"
+SPACE_URL = "https://huggingface.co/spaces/sag-uniroma2/UniTorESGInsights"
+VIDEO_URL = "https://youtu.be/ErhCHIakyzg"
+HF_ORG = "https://huggingface.co/sag-uniroma2"
+
+ACM_REFERENCE = (
+    "Seyed Alireza Mousavian Anaraki, Danilo Croce, Roberta Costa, Luigi Tiburzi, "
+    "Armando Calabrese, and Roberto Basili. 2026. *UniTor ESG Insights: An Interactive "
+    "Human-in-the-Loop System for Traceable Sustainability Report Analysis.* In Proceedings "
+    "of the 35th ACM International Conference on Information and Knowledge Management "
+    "(CIKM '26), November 07–11, 2026, Rome, Italy. ACM, New York, NY, USA. "
+    f"[{PAPER_DOI_URL}]({PAPER_DOI_URL})"
+)
+
+BIBTEX = """@inproceedings{mousavian2026unitorsg,
+  author    = {Mousavian Anaraki, Seyed Alireza and Croce, Danilo and Costa, Roberta and
+               Tiburzi, Luigi and Calabrese, Armando and Basili, Roberto},
+  title     = {UniTor ESG Insights: An Interactive Human-in-the-Loop System for
+               Traceable Sustainability Report Analysis},
+  booktitle = {Proceedings of the 35th ACM International Conference on Information
+               and Knowledge Management (CIKM '26)},
+  year      = {2026},
+  address   = {Rome, Italy},
+  publisher = {ACM},
+  doi       = {10.1145/3799682.3840253}
+}"""
+
+LINKS_LINE = (
+    f"📄 [Paper (DOI)]({PAPER_DOI_URL}) &nbsp;·&nbsp; "
+    f"💻 [GitHub repository]({REPO_URL}) &nbsp;·&nbsp; "
+    f"🤗 [Models]({MODELS_URL}) &nbsp;·&nbsp; "
+    f"▶️ [Demo video]({VIDEO_URL})"
+)
+
+DEMO_INTRO_MD = f"""
+Companion demo for the paper **"{PAPER_TITLE}"**, published in the Proceedings of the
+[35th ACM International Conference on Information and Knowledge Management (CIKM 2026)]({CIKM_URL}),
+November 7–11, 2026, Rome, Italy.
+
+{LINKS_LINE}
+"""
+
+ABOUT_DEMO_MD = f"""
+**What this demo does.** It turns a PDF sustainability report into *paragraph-level ESG evidence*:
+every prediction stays linked to its document, page and paragraph number, so each chart can be
+traced back to the text behind it.
+
+**Human in the loop.** At every step you can download the results as CSV, review or correct them,
+and upload the corrected file again: all later steps then use your corrections.
+
+**How to use it.** Follow Steps 1–5 from top to bottom. Open the ℹ️ boxes for a short description
+of each step and of the model behind each task.
+
+**More details:** code, setup instructions and all models are in the
+[GitHub repository]({REPO_URL}) and the [model collection]({MODELS_URL}).
+The hosted version of this demo is on [Hugging Face Spaces]({SPACE_URL}).
+
+**Cite.** {ACM_REFERENCE}
+
+```bibtex
+{BIBTEX}
+```
+"""
+
+CITE_FOOTER_MD = f"""
+---
+### 📚 If you find UniTor ESG Insights useful, please cite our paper
+
+{ACM_REFERENCE}
+
+```bibtex
+{BIBTEX}
+```
+
+You can find more details, the source code and all fine-tuned models in the
+[GitHub repository]({REPO_URL}) and the [Hugging Face collection]({MODELS_URL}).
+"""
+
+# Shared note: each task is a separate model, trained on its own dataset and label set.
+TASK_NOTE = (
+    "\n\n> **Note.** Each task uses a separate model, trained on its own dataset and label set. "
+    "Validation scores are therefore not directly comparable across tasks. You can select and run "
+    "several tasks at the same time, but interpret each task's labels separately: labels from "
+    "different models may not always agree on the same paragraph. Choose the tasks that match "
+    "your analysis goal."
+)
+
+STEP_INFO = {
+    1: "Upload a PDF sustainability report. The system splits it into paragraphs (more than 20 words), "
+       "keeping the **document name, page number and paragraph number** for traceability. "
+       "Use ⬅ / ➡ to browse page by page: each page image is shown next to its extracted paragraphs. "
+       "You can download the extracted CSV, edit it, and upload it again before the next step.",
+    2: "Each paragraph is classified as **Relevant** or **Irrelevant** to sustainability frameworks "
+       "(integrated GRI and SDG). Only Relevant paragraphs are passed to the next steps. "
+       "Download the results, correct any label if needed, and upload the modified CSV.",
+    3: "Relevant paragraphs are aligned with the **17 SDGs** and with the **GRI topic** series "
+       "(General, Economic, Environmental, Social). After running, click an SDG or GRI icon to "
+       "filter the table and see only the paragraphs behind it." + TASK_NOTE,
+    4: "Characterises the quality of each disclosure: **informative vs. vague**, **qualitative vs. "
+       "quantitative**, and a **weak-disclosure risk proxy** (shown as 'greenwashing potential'). "
+       "The risk proxy signals low evidential support, *not* a verdict of greenwashing." + TASK_NOTE,
+    5: "Climate-specific analysis with ClimateBERT-based models: **climate relevance**, "
+       "**GRI climate topics**, and **SDG 13 Climate Action** alignment (overall and by GRI aspect). "
+       "Click any icon to filter the paragraphs." + TASK_NOTE +
+       "\n\n> **Example.** A paragraph can be labelled *Environmental* by the GRI topic model in Step 3 "
+       "but *Non-Climate* by the climate model in this step. The two models answer different questions "
+       "with different training data, so their labels complement each other rather than conflict. "
+       "Use climate relevance for climate-specific screening, and GRI topics for the broader "
+       "sustainability topic.",
+}
+
+# Per-task info: model repo id, short description, labels, base model, indicative macro F1
+# (validation scores of each released model, from Table 1 of the paper; they come from
+# different datasets and are not directly comparable across tasks).
+TASK_INFO = {
+    "SA": {
+        "name": "Sustainability Framework Alignment",
+        "model": "SA_MODEL",
+        "desc": "Binary classification model for detecting whether a paragraph is aligned with "
+                "sustainability reporting integrated GRI and SDG frameworks.",
+        "labels": "Relevant · Irrelevant",
+        "base": "BERT (bert-base-cased)",
+        "f1": "0.968",
+    },
+    "17 SDG Alignment": {
+        "name": "SDG Alignment",
+        "model": "SDG_MODEL",
+        "desc": "Assigns each relevant paragraph to the Sustainable Development Goal (one of the 17 SDGs) "
+                "it is most aligned with.",
+        "labels": "SDG 1 … SDG 17",
+        "base": "BERT (bert-base-cased)",
+        "f1": "0.860",
+    },
+    "GRI Topic Alignment": {
+        "name": "GRI Topic Alignment",
+        "model": "GRITopics_MODEL",
+        "desc": "Assigns each relevant paragraph to a GRI Standards topic series.",
+        "labels": "General · Economic (GRI 200) · Environmental (GRI 300) · Social (GRI 400)",
+        "base": "BERT",
+        "f1": "0.736",
+    },
+    "Informative & Non-Informative/Vague Sustainability Text Identification": {
+        "name": "Informative vs. Non-Informative/Vague",
+        "model": "INFVague_MODEL",
+        "desc": "Detects whether a sustainability paragraph gives specific, informative content "
+                "or stays generic and vague.",
+        "labels": "Informative · Non-informative/Vague",
+        "base": "BERT",
+        "f1": "0.675",
+    },
+    "Qualitative & Quantitative Sustainability Text Identification": {
+        "name": "Qualitative vs. Quantitative",
+        "model": "QQ_MODEL",
+        "desc": "Detects whether a sustainability paragraph provides quantitative evidence "
+                "(numbers, measurable indicators) or only qualitative statements.",
+        "labels": "Qualitative · Quantitative",
+        "base": "BERT",
+        "f1": "0.857",
+    },
+    "High Potential Greenwashing Detection": {
+        "name": "Weak-Disclosure Risk Proxy (High/Low Potential Greenwashing)",
+        "model": "HPGW_MODEL",
+        "desc": "Flags paragraphs with weak evidential support as a risk signal for further review. "
+                "It reflects disclosure quality and linguistic evidence, not actual greenwashing behaviour.\n\n"
+                "- **High Potential Greenwashing (weak disclosure):** descriptive or less evidentially "
+                "supported disclosures, i.e. *Relevant + Informative + Qualitative* or "
+                "*Relevant + Non-informative/Vague* paragraphs.\n"
+                "- **Low Potential Greenwashing:** evidentially supported disclosures, i.e. "
+                "*Relevant + Informative + Quantitative* paragraphs.",
+        "labels": "High Potential Greenwashing · Low Potential Greenwashing",
+        "base": "BERT",
+        "f1": "0.793",
+    },
+    "Climate Alignment": {
+        "name": "Climate Relevance",
+        "model": "Climate_MODEL",
+        "desc": "Detects whether a paragraph is about climate-related topics.",
+        "labels": "Climate · Non-Climate",
+        "base": "ClimateBERT",
+        "f1": "0.930",
+    },
+    "GRI Climate Alignment": {
+        "name": "GRI Climate Category Alignment",
+        "model": "GRIClimate_MODEL",
+        "desc": "Aligns climate-related paragraphs with GRI climate-relevant standards.",
+        "labels": "GRI 101 Biodiversity · GRI 2 General · GRI 201 Economic · GRI 302 Energy · "
+                  "GRI 303 Water · GRI 305 Emissions · GRI 306 Waste",
+        "base": "ClimateBERT",
+        "f1": "0.755",
+    },
+    "Climate Action (SDG13) Alignment": {
+        "name": "Climate Action (SDG 13) Alignment",
+        "model": "ClimateActionSDG13_MODEL",
+        "desc": "Detects whether a paragraph is aligned with SDG 13 Climate Action.",
+        "labels": "Climate Action (SDG13) · Non-Climate Action",
+        "base": "ClimateBERT",
+        "f1": "0.915",
+    },
+    "GRI Climate Action (SDG13) Alignment": {
+        "name": "Climate Action GRI Topic Alignment",
+        "model": "GRISDG13_MODEL",
+        "desc": "Links SDG 13 Climate Action content to the GRI aspect it relates to.",
+        "labels": "General Aspect (GRI 2) · Economic Aspect (GRI 201) · Environmental Aspect (GRI 305)",
+        "base": "ClimateBERT",
+        "f1": "0.910",
+    },
+}
+
+
+def task_info_md(task):
+    t = TASK_INFO[task]
+    url = f"{HF_ORG}/{t['model']}"
+    return (
+        f"**{t['name']}** ([{t['model']}]({url}))\n\n"
+        f"**Task description.** {t['desc']}\n\n"
+        f"- **Labels:** {t['labels']}\n"
+        f"- **Base model:** {t['base']}, fine-tuned\n"
+        f"- **Validation macro F1 (indicative):** {t['f1']}\n\n"
+        f"Model card: [{url}]({url}) · details in the [GitHub repository]({REPO_URL})"
+    )
+
+
+def info_box(label, md_text):
+    """Collapsible info box: closed by default, click to open, click again to close."""
+    with gr.Accordion(label, open=False):
+        gr.Markdown(md_text)
+
+
+def step_info(step, tasks):
+    """One closed info box per step: the step explanation + one box per task model."""
+    with gr.Accordion(f"ℹ️ About Step {step}", open=False):
+        gr.Markdown(STEP_INFO[step])
+        for task in tasks:
+            with gr.Accordion(f"🤖 {TASK_INFO[task]['name']} — {TASK_INFO[task]['model']}", open=False):
+                gr.Markdown(task_info_md(task))
+
+
 
 def _empty_plot():
     return go.Figure()
@@ -68,10 +312,15 @@ def build_interface():
             #width=600
         )
 
+        # --- paper / repository / citation info under the workflow figure ---
+        gr.Markdown(DEMO_INTRO_MD)
+        info_box("📄 About this demo · paper · repository · how to cite", ABOUT_DEMO_MD)
+
         # =========================
         # STAGE 1: PDF → CSV
         # =========================
         gr.Markdown("## Step 1: Upload PDF and Extract Data")
+        step_info(1, [])
 
         file = gr.File(label="Upload PDF")
         load_btn = gr.Button("Load PDF", variant="primary")
@@ -94,6 +343,7 @@ def build_interface():
         # STAGE 2: SA
         # =========================
         gr.Markdown("## Step 2: Sustainability Frameworks (GRI & SDG) Alignment (SFA) for Relevant/Irrelevant Classification Task")
+        step_info(2, ["SA"])
 
         sa_btn = gr.Button("Run SFA", variant="primary")
 
@@ -130,6 +380,7 @@ def build_interface():
         # STAGE 3: SDG / GRI
         # =========================
         gr.Markdown("## Step 3: SDG/GRI Classification (Topic Alignment)")
+        step_info(3, ["17 SDG Alignment", "GRI Topic Alignment"])
 
         task_selector_1 = gr.Dropdown(
             choices=[
@@ -204,6 +455,11 @@ def build_interface():
         # STAGE 4: DISCLOSURE QUALITY
         # =========================
         gr.Markdown("## Step 4: Disclosure Quality Analysis")
+        step_info(4, [
+            "Informative & Non-Informative/Vague Sustainability Text Identification",
+            "Qualitative & Quantitative Sustainability Text Identification",
+            "High Potential Greenwashing Detection",
+        ])
 
         task_selector_2 = gr.Dropdown(
             choices=[
@@ -295,6 +551,12 @@ def build_interface():
         # STAGE 5: CLIMATE ANALYSIS
         # =========================
         gr.Markdown("## Step 5: More Specific Climate Analysis")
+        step_info(5, [
+            "Climate Alignment",
+            "GRI Climate Alignment",
+            "Climate Action (SDG13) Alignment",
+            "GRI Climate Action (SDG13) Alignment",
+        ])
 
         task_selector_3 = gr.Dropdown(
             choices=[
@@ -406,6 +668,9 @@ def build_interface():
             inputs=task_selector_3,
             outputs=[download_3, table, chart_tasks_3]
         )
+
+        # --- citation footer ---
+        gr.Markdown(CITE_FOOTER_MD)
 
         toggle_containers = [
             sdg_container, gri_container,
