@@ -239,17 +239,20 @@ This project is released under the [Apache License 2.0](https://www.apache.org/l
 If you use this repository or its resources in your research, please cite our paper:
 
 ```bibtex
-@inproceedings{mousavian2026unitorsg,
-  author    = {Mousavian Anaraki, Seyed Alireza and
-               Croce, Danilo and
-               Costa, Roberta and
-               Tiburzi, Luigi and
-               Calabrese, Armando and
-               Basili, Roberto},
-  title     = {{UniTor ESG Insights}: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis},
-  booktitle = {Proceedings of the 35th ACM International Conference on Information and Knowledge Management (CIKM '26)},
-  year      = {2026},
-  address   = {Rome, Italy},
-  publisher = {ACM},
-  doi       = {10.1145/3799682.3840253}
+@inproceedings{10.1145/3799682.3840253,
+author = {Mousavian Anaraki, Seyed Alireza and Croce, Danilo and Costa, Roberta and Tiburzi, Luigi and Calabrese, Armando and Basili, Roberto},
+title = {UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis},
+year = {2026},
+isbn = {9798400725395},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3799682.3840253},
+doi = {10.1145/3799682.3840253},
+abstract = {We present UniTor ESG Insights, an interactive system for traceable sustainability report analysis. Starting from PDF reports, the system extracts paragraph-level textual units, preserves page-level provenance, and applies a set of ESG classification modules for sustainability relevance detection, GRI--SDG topic alignment, disclosure quality assessment, qualitative/quantitative evidence identification, and climate-related analysis. The system targets ESG analysts, auditors, regulators, and corporate sustainability managers who need to inspect and aggregate evidence from long and partially structured reports. Unlike approaches that return only document-level labels or aggregate ESG scores, UniTor ESG Insights follows a bottom-up workflow in which predictions are generated at paragraph level and higher-level summaries remain linked to the underlying textual evidence. Users can inspect extracted paragraphs, filter predictions, correct intermediate outputs, re-upload refined data, visualize distributions, and export structured results. The demonstration shows an end-to-end scenario in which a user uploads a sustainability report, explores paragraph-level ESG predictions, analyzes disclosure quality and evidence characteristics, and generates traceable analytical views through a Gradio interface deployed on Hugging Face Spaces.},
+booktitle = {Proceedings of the 35th ACM International Conference on Information and Knowledge Management},
+pages = {9199–9203},
+numpages = {5},
+keywords = {esg analytics, sustainability reporting, human-in-the-loop systems, gri--sdg alignment, traceable decision support},
+location = {Rome, Italy},
+series = {CIKM '26}
 }
