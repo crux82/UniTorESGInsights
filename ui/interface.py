@@ -61,17 +61,22 @@ ACM_REFERENCE = (
     f"[{PAPER_DOI_URL}]({PAPER_DOI_URL})"
 )
 
-BIBTEX = """@inproceedings{mousavian2026unitorsg,
-  author    = {Mousavian Anaraki, Seyed Alireza and Croce, Danilo and Costa, Roberta and
-               Tiburzi, Luigi and Calabrese, Armando and Basili, Roberto},
-  title     = {UniTor ESG Insights: An Interactive Human-in-the-Loop System for
-               Traceable Sustainability Report Analysis},
-  booktitle = {Proceedings of the 35th ACM International Conference on Information
-               and Knowledge Management (CIKM '26)},
-  year      = {2026},
-  address   = {Rome, Italy},
-  publisher = {ACM},
-  doi       = {10.1145/3799682.3840253}
+BIBTEX = """@inproceedings{10.1145/3799682.3840253,
+author = {Mousavian Anaraki, Seyed Alireza and Croce, Danilo and Costa, Roberta and Tiburzi, Luigi and Calabrese, Armando and Basili, Roberto},
+title = {UniTor ESG Insights: An Interactive Human-in-the-Loop System for Traceable Sustainability Report Analysis},
+year = {2026},
+isbn = {9798400725395},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3799682.3840253},
+doi = {10.1145/3799682.3840253},
+abstract = {We present UniTor ESG Insights, an interactive system for traceable sustainability report analysis. Starting from PDF reports, the system extracts paragraph-level textual units, preserves page-level provenance, and applies a set of ESG classification modules for sustainability relevance detection, GRI--SDG topic alignment, disclosure quality assessment, qualitative/quantitative evidence identification, and climate-related analysis. The system targets ESG analysts, auditors, regulators, and corporate sustainability managers who need to inspect and aggregate evidence from long and partially structured reports. Unlike approaches that return only document-level labels or aggregate ESG scores, UniTor ESG Insights follows a bottom-up workflow in which predictions are generated at paragraph level and higher-level summaries remain linked to the underlying textual evidence. Users can inspect extracted paragraphs, filter predictions, correct intermediate outputs, re-upload refined data, visualize distributions, and export structured results. The demonstration shows an end-to-end scenario in which a user uploads a sustainability report, explores paragraph-level ESG predictions, analyzes disclosure quality and evidence characteristics, and generates traceable analytical views through a Gradio interface deployed on Hugging Face Spaces.},
+booktitle = {Proceedings of the 35th ACM International Conference on Information and Knowledge Management},
+pages = {9199–9203},
+numpages = {5},
+keywords = {esg analytics, sustainability reporting, human-in-the-loop systems, gri--sdg alignment, traceable decision support},
+location = {Rome, Italy},
+series = {CIKM '26}
 }"""
 
 LINKS_LINE = (
@@ -125,6 +130,25 @@ You can find more details, the source code and all fine-tuned models in the
 [GitHub repository]({REPO_URL}) and the [Hugging Face collection]({MODELS_URL}).
 """
 
+# Sample report for first-time visitors (public PDF).
+SAMPLE_REPORT_URL = "https://assets.asics.com/system/libraries/4036/ASICS_sustainability_report_2024.pdf"
+
+# Short "how to try" guide shown at the top, for visitors who did not attend the presentation.
+HOW_TO_TRY_MD = f"""
+> 🚀 **New to UniTor ESG Insights?** Start with the [ASICS Sustainability Report 2024]({SAMPLE_REPORT_URL})
+> (download the PDF and upload it in Step 1). Identify sustainability-relevant paragraphs (Step 2), then run
+> **SDG Alignment** (Step 3) and click an SDG icon to inspect the supporting evidence. You can also explore
+> disclosure quality (Step 4) and climate-related predictions (Step 5), and download the results for human
+> review and correction.
+"""
+
+# Note shown next to the PDF upload (public demo).
+UPLOAD_NOTE_MD = (
+    "🔒 *Please upload only **public or authorized** documents "
+    "(e.g. published sustainability reports). Do not upload confidential or personal data.* "
+    f"No report at hand? Try the [ASICS Sustainability Report 2024]({SAMPLE_REPORT_URL})."
+)
+
 # Shared note: each task is a separate model, trained on its own dataset and label set.
 TASK_NOTE = (
     "\n\n> **Note.** Each task uses a separate model, trained on its own dataset and label set. "
@@ -141,7 +165,9 @@ STEP_INFO = {
        "You can download the extracted CSV, edit it, and upload it again before the next step.",
     2: "Each paragraph is classified as **Relevant** or **Irrelevant** to sustainability frameworks "
        "(integrated GRI and SDG). Only Relevant paragraphs are passed to the next steps. "
-       "Download the results, correct any label if needed, and upload the modified CSV.",
+       "Download the results, correct any label if needed, and upload the modified CSV.\n\n"
+       "*Technical name:* Sustainability Frameworks (GRI & SDG) Alignment (SFA) for "
+       "Relevant/Irrelevant Classification.",
     3: "Relevant paragraphs are aligned with the **17 SDGs** and with the **GRI topic** series "
        "(General, Economic, Environmental, Social). After running, click an SDG or GRI icon to "
        "filter the table and see only the paragraphs behind it." + TASK_NOTE,
@@ -211,11 +237,17 @@ TASK_INFO = {
         "model": "HPGW_MODEL",
         "desc": "Flags paragraphs with weak evidential support as a risk signal for further review. "
                 "It reflects disclosure quality and linguistic evidence, not actual greenwashing behaviour.\n\n"
-                "- **High Potential Greenwashing (weak disclosure):** descriptive or less evidentially "
-                "supported disclosures, i.e. *Relevant + Informative + Qualitative* or "
-                "*Relevant + Non-informative/Vague* paragraphs.\n"
-                "- **Low Potential Greenwashing:** evidentially supported disclosures, i.e. "
-                "*Relevant + Informative + Quantitative* paragraphs.",
+                "This is an **independent binary classifier**: it predicts the label directly from the "
+                "paragraph text and does **not** combine the outputs of the other models in this demo. "
+                "Its training labels were derived by combining the annotations of the same taxonomy "
+                "(Relevant/Irrelevant, Informative/Non-informative, Qualitative/Quantitative):\n\n"
+                "- **High Potential Greenwashing (weak disclosure):** *Relevant + Informative + Qualitative* "
+                "or *Relevant + Non-informative* paragraphs, i.e. descriptive or less evidentially "
+                "supported disclosures.\n"
+                "- **Low Potential Greenwashing:** *Relevant + Informative + Quantitative* paragraphs, "
+                "i.e. disclosures supported by measurable evidence.\n\n"
+                "The label signals **weak evidential support that may require further review**; "
+                "qualitative disclosures are not necessarily examples of greenwashing.",
         "labels": "High Potential Greenwashing · Low Potential Greenwashing",
         "base": "BERT",
         "f1": "0.793",
@@ -314,6 +346,7 @@ def build_interface():
 
         # --- paper / repository / citation info under the workflow figure ---
         gr.Markdown(DEMO_INTRO_MD)
+        gr.Markdown(HOW_TO_TRY_MD)
         info_box("📄 About this demo · paper · repository · how to cite", ABOUT_DEMO_MD)
 
         # =========================
@@ -322,6 +355,7 @@ def build_interface():
         gr.Markdown("## Step 1: Upload PDF and Extract Data")
         step_info(1, [])
 
+        gr.Markdown(UPLOAD_NOTE_MD)
         file = gr.File(label="Upload PDF")
         load_btn = gr.Button("Load PDF", variant="primary")
 
@@ -342,7 +376,7 @@ def build_interface():
         # =========================
         # STAGE 2: SA
         # =========================
-        gr.Markdown("## Step 2: Sustainability Frameworks (GRI & SDG) Alignment (SFA) for Relevant/Irrelevant Classification Task")
+        gr.Markdown("## Step 2: Identify Sustainability-Relevant Paragraphs")
         step_info(2, ["SA"])
 
         sa_btn = gr.Button("Run SFA", variant="primary")
@@ -550,7 +584,7 @@ def build_interface():
         # =========================
         # STAGE 5: CLIMATE ANALYSIS
         # =========================
-        gr.Markdown("## Step 5: More Specific Climate Analysis")
+        gr.Markdown("## Step 5: Climate-Specific Analysis")
         step_info(5, [
             "Climate Alignment",
             "GRI Climate Alignment",
